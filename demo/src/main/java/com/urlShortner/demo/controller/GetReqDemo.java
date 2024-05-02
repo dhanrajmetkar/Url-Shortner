@@ -5,11 +5,11 @@ import com.urlShortner.demo.Services.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.UUID;
+import java.net.URL;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 
@@ -21,29 +21,44 @@ public class GetReqDemo {
     private UrlService urlService;
 
 
-      @GetMapping("/url")
+      @GetMapping("/getAllDomains")
       public List<Url> getUrls()
       {
          return urlService.getAllUrl();
       }
-
-      @GetMapping("/url/{key}")
-
-        public Url getUrl(@PathVariable("key") String key)
+      @GetMapping("/getCount")
+      public List<Map.Entry<String, Integer>> getcount()
       {
-          return urlService.getUrl(key);
-      }
-    @GetMapping("url/count/{key}")
-      public Url getCou(@PathVariable("key") String key)
-    {
-        return urlService.getcount(key);
-    }
+          Map <String,Integer>map=urlService.getcount();
 
-        @PostMapping("/url")
-        public Url shorturl(@RequestBody String url)
+          List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+
+          //Using Entry's comparingByValue() method for sorting in ascending order
+          list.sort(Map.Entry.comparingByValue());
+          Collections.reverse(list);
+          if(list.size()<=3)
+              return list;
+          List<Map.Entry<String, Integer>> firstThreeElements = new ArrayList<>();
+          for (int i = 0; i < 3; i++) {
+              firstThreeElements.add(list.get(i));
+          }
+           return firstThreeElements;
+      }
+
+      @GetMapping("/{key}")
+
+        public URL getUrl(@PathVariable("key") String key)
+      {
+          Url temp= urlService.getUrl(key);
+          return temp.getUrl();
+      }
+
+        @PostMapping("/shortUrl")
+        public String  shorturl(@RequestBody String url)
         {
             Url temp=this.urlService.addurl(url);
-           return temp;
+            String key="http://localhost:8080/"+temp.getKey();
+            return key;
         }
 
 }
