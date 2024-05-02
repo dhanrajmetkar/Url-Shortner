@@ -32,3 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 .mvn/wrapper
+mysql-driver-8.0.28.jar
+mvnw
+mvnw.cmd
+README.md
