@@ -1,5 +1,8 @@
 package com.urlShortner.demo.Entity;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Url {
     private String key;
     private String url;
@@ -14,8 +17,17 @@ public class Url {
         this.count = count;
     }
 
-    public String getUrl() {
+    public String getUrlString() {
         return url;
+    }
+        public URL getUrl() {
+        URL ur;
+        try {
+            ur = new URL(this.url);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return ur;
     }
 
     public void setUrl(String url) {
