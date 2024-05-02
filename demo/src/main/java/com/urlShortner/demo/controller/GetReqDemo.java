@@ -29,20 +29,7 @@ public class GetReqDemo {
       @GetMapping("/getCount")
       public List<Map.Entry<String, Integer>> getcount()
       {
-          Map <String,Integer>map=urlService.getcount();
-
-          List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
-
-          //Using Entry's comparingByValue() method for sorting in ascending order
-          list.sort(Map.Entry.comparingByValue());
-          Collections.reverse(list);
-          if(list.size()<=3)
-              return list;
-          List<Map.Entry<String, Integer>> firstThreeElements = new ArrayList<>();
-          for (int i = 0; i < 3; i++) {
-              firstThreeElements.add(list.get(i));
-          }
-           return firstThreeElements;
+          return urlService.getcount();
       }
 
       @GetMapping("/{key}")

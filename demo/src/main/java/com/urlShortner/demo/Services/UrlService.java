@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Stream;
 
 @Component
 public class UrlService {
@@ -56,9 +55,22 @@ public class UrlService {
 
         }
 
-        public Map getcount()
+        public List<Map.Entry<String, Integer>> getcount()
         {
-return mp;
+
+
+            List<Map.Entry<String, Integer>> list = new ArrayList<>(mp.entrySet());
+
+            //Using Entry's comparingByValue() method for sorting in ascending order
+            list.sort(Map.Entry.comparingByValue());
+            Collections.reverse(list);
+            if(list.size()<=3)
+                return list;
+            List<Map.Entry<String, Integer>> firstThreeElements = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                firstThreeElements.add(list.get(i));
+            }
+            return firstThreeElements;
 
         }
 
