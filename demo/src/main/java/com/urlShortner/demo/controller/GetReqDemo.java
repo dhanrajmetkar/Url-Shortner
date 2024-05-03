@@ -5,11 +5,12 @@ import com.urlShortner.demo.Services.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 
@@ -22,14 +23,24 @@ public class GetReqDemo {
 
 
       @GetMapping("/getAllDomains")
-      public List<Url> getUrls()
+      public ResponseEntity<List<String>> getUrls()
       {
-         return urlService.getAllUrl();
+
+          List<String> allList=urlService.getAllUrl();
+          if(allList.isEmpty())
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+          return
+                  ResponseEntity.of(Optional.of(allList));
       }
       @GetMapping("/getCount")
-      public List<Map.Entry<String, Integer>> getcount()
+      public ResponseEntity<Object> getcount()
       {
-          return urlService.getcount();
+          List<Map.Entry<String, Integer>>list =urlService.getcount();
+          if(list.isEmpty())
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+          return
+                  ResponseEntity.of(Optional.of(list));
+
       }
 
       @GetMapping("/{key}")

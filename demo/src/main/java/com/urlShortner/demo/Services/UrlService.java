@@ -12,8 +12,14 @@ public class UrlService {
     private  static List<Url> li=new ArrayList<>();
     private static Map<String,Integer> mp= new HashMap<>();
 
-       public List<Url> getAllUrl(){
-            return li;
+       public List<String> getAllUrl(){
+
+           List<String> allDomain=new ArrayList<>();
+
+           for (String name : mp.keySet())
+               System.out.println("key: " + name);
+
+           return allDomain;
         }
 
         public Url getUrl(String key)
