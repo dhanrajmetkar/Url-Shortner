@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.net.URL;
 import java.util.*;
@@ -21,17 +22,17 @@ public class GetReqDemo {
     @Autowired
     private UrlService urlService;
 
-
-      @GetMapping("/getAllDomains")
-      public ResponseEntity<List<String>> getUrls()
-      {
-
-          List<String> allList=urlService.getAllUrl();
-          if(allList.isEmpty())
-              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-          return
-                  ResponseEntity.of(Optional.of(allList));
-      }
+//
+//      @GetMapping("/getAllDomains")
+//      public ResponseEntity<List<String>> getUrls()
+//      {
+//
+//          List<String> allList=urlService.getAllUrl();
+//          if(allList.isEmpty())
+//              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//          return
+//                  ResponseEntity.of(Optional.of(allList));
+//      }
       @GetMapping("/getCount")
       public ResponseEntity<Object> getcount()
       {
@@ -45,17 +46,22 @@ public class GetReqDemo {
 
       @GetMapping("/{key}")
 
-        public URL getUrl(@PathVariable("key") String key)
+        public RedirectView getUrl(@PathVariable("key") String key)
       {
           Url temp= urlService.getUrl(key);
-          return temp.getUrl();
+          String url= temp.getUrlString();
+          RedirectView redirectView=new RedirectView();
+          redirectView.setUrl(url);
+          return redirectView;
       }
 
         @PostMapping("/shortUrl")
-        public String  shorturl(@RequestBody String url)
+        public String shorturl(@RequestBody String url)
         {
+            RedirectView redirectView=new RedirectView();
             Url temp=this.urlService.addurl(url);
-            String key="http://localhost:8080/"+temp.getKey();
+            String key="http://localhost:8080/"+temp.getShorturl();
+            redirectView.setUrl(key);
             return key;
         }
 

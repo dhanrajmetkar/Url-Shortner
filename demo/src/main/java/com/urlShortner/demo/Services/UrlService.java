@@ -25,7 +25,7 @@ public class UrlService {
         public Url getUrl(String key)
         {
             Url url=null;
-            url= li.stream().filter(i->i.getKey().equals(key)).findFirst().get();
+            url= li.stream().filter(i->i.getShorturl().equals(key)).findFirst().get();
             url.setCount(url.getCount()+1);
             return url;
         }

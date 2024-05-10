@@ -4,15 +4,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Url {
-    private String key;
+    private String shorturl;
     private String url;
     private int count;
 
     public Url() {
     }
 
-    public Url(String key, String url, int count) {
-        this.key = key;
+    public Url(String shorturl, String url, int count) {
+        this.shorturl = shorturl;
         this.url = url;
         this.count = count;
     }
@@ -34,13 +34,6 @@ public class Url {
         this.url = url;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public int getCount() {
         return count;
@@ -53,10 +46,17 @@ public class Url {
     @Override
     public String toString() {
         return "Url{" +
-                "key=" + key +
+                "shorturl='" + shorturl + '\'' +
                 ", url='" + url + '\'' +
                 ", count=" + count +
                 '}';
     }
 
+    public String getShorturl() {
+        return shorturl;
+    }
+
+    public void setShorturl(String shorturl) {
+        this.shorturl = shorturl;
+    }
 }
