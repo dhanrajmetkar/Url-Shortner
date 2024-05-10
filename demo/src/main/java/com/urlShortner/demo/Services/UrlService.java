@@ -1,6 +1,7 @@
 package com.urlShortner.demo.Services;
 
 import com.urlShortner.demo.Entity.Url;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
@@ -57,6 +58,8 @@ public class UrlService {
 
                 Url url1 = new Url(uuid.toString().substring(0, 4), url, 1);
                 li.add(url1);
+
+
                 return url1;
 
         }

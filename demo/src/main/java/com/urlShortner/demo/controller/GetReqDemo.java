@@ -5,34 +5,38 @@ import com.urlShortner.demo.Services.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.stereotype.Service;
 
-import java.net.URL;
 import java.util.*;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 
 @RestController
+
 public class GetReqDemo {
 
 
     @Autowired
     private UrlService urlService;
 
-//
-//      @GetMapping("/getAllDomains")
-//      public ResponseEntity<List<String>> getUrls()
-//      {
-//
-//          List<String> allList=urlService.getAllUrl();
-//          if(allList.isEmpty())
-//              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//          return
-//                  ResponseEntity.of(Optional.of(allList));
-//      }
+
+      @GetMapping("/getAllDomains")
+      public ResponseEntity<List<String>> getUrls()
+      {
+
+          List<String> allList=urlService.getAllUrl();
+          if(allList.isEmpty())
+              return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+          return
+                  ResponseEntity.of(Optional.of(allList));
+      }
       @GetMapping("/getCount")
       public ResponseEntity<Object> getcount()
       {
@@ -64,6 +68,11 @@ public class GetReqDemo {
             redirectView.setUrl(key);
             return key;
         }
+//    @GetMapping(path="/all")
+//    public @ResponseBody Iterable<Url> getAllUsers() {
+//        // This returns a JSON or XML with the users
+//        return urlRepository.findAll();
+//    }
 
 }
 

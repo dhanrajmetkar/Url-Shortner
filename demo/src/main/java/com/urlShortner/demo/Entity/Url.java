@@ -1,12 +1,29 @@
 package com.urlShortner.demo.Entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Entity
 public class Url {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer id;
     private String shorturl;
     private String url;
     private int count;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Url() {
     }
